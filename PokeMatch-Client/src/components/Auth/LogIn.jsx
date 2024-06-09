@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
 const formStyle = {
-  background: "cyan"
+  background: "cyan",
+  color:"magenta"
 }
 
 function LogIn() {
