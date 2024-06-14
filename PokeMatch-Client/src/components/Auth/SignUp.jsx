@@ -12,11 +12,11 @@ const formStyle = {
   width:"85vw"
 }
 
-function LogIn() {
+function SignUp() {
   return (
     <React.Fragment>
       <Form style={formStyle}>
-        <h1 style={{"textAlign":"center"}}>Log In</h1>
+        <h1 style={{"textAlign":"center"}}>Register</h1>
         <FormGroup row>
           <Label xs={4}>Username</Label>
           <Col xs={4}>
@@ -38,22 +38,21 @@ function LogIn() {
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label md={4} style={{textAlign:"center"}}>Password</Label>
-          <Col md={4}>
+          <Label xs={2}>Password</Label>
+          <Col xs={4}>
           <Input
           id="examplePassword"
           name="password"
           placeholder='Password'
-          type='password' 
-          />
+          type='password' />
           </Col>
         </FormGroup>
         <Button>
-          Log In
+          Sign Up
         </Button>
       </Form>
     </React.Fragment>
   )
 }
 
-export default LogIn
+export default SignUp
