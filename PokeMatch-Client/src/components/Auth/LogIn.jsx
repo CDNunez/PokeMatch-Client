@@ -1,40 +1,51 @@
 import React from 'react';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
 const formStyle = {
-  background: "cyan",
-  color:"magenta"
+  background: "#FFF",
+  borderBottom: "solid 0.5px",
+  borderLeft: "solid 5px",
+  borderColor:"gray",
+  color:"black",
+  padding:'10px',
+  margin:'10px auto',
+  width:"85vw"
 }
 
 function LogIn() {
   return (
     <React.Fragment>
       <Form style={formStyle}>
-        <h1>Log In</h1>
-        <FormGroup>
-          <Label>Username</Label>
-          <Input 
+        <h1 style={{"textAlign":"center"}}>Log In</h1>
+        <FormGroup row>
+          <Label xs={4}>Username</Label>
+          <Col xs={4}>
+          <Input
           id="exampleUsername"
           name="username"
-          placeholder='Enter Username'
-          type="text"
-          />
+          placeholder='Username'
+          type='text' />
+          </Col>
         </FormGroup>
-        <FormGroup>
-          <Label>Email</Label>
+        <FormGroup row>
+          <Label xs={2}>Email</Label>
+          <Col xs={4}>
           <Input
           id="exampleEmail"
           name="email"
-          placeholder='email@mail.com'
-          type='email'/>
+          placeholder='Email'
+          type='email' />
+          </Col>
         </FormGroup>
-        <FormGroup>
-          <Label>Password</Label>
+        <FormGroup row>
+          <Label xs={2}>Password</Label>
+          <Col xs={4}>
           <Input
           id="examplePassword"
           name="password"
-          placeholder='Choose your password'
-          type='password'/>
+          placeholder='Password'
+          type='password' />
+          </Col>
         </FormGroup>
         <Button>
           Log In
