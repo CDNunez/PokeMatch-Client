@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
 const formStyle = {
@@ -12,10 +13,11 @@ const formStyle = {
   width:"85vw"
 }
 
-function SignUp() {
+function SignUp({updateToken}) {
+
   return (
     <React.Fragment>
-      <Form style={formStyle}>
+      <Form>
         <h1 style={{"textAlign":"center"}}>Register</h1>
         <FormGroup row>
           <Label xs={4}>Username</Label>
@@ -24,6 +26,8 @@ function SignUp() {
           id="exampleUsername"
           name="username"
           placeholder='Username'
+          autoComplete='off'
+          innerRef={usernameRef}
           type='text' />
           </Col>
         </FormGroup>
@@ -33,6 +37,8 @@ function SignUp() {
           <Input
           id="exampleEmail"
           name="email"
+          autoComplete='off'
+          innerRef={emailRef}
           placeholder='Email'
           type='email' />
           </Col>
@@ -43,11 +49,13 @@ function SignUp() {
           <Input
           id="examplePassword"
           name="password"
+          autoComplete='off'
+          innerRef={passwordRef}
           placeholder='Password'
           type='password' />
           </Col>
         </FormGroup>
-        <Button>
+        <Button type='submit'>
           Sign Up
         </Button>
       </Form>
