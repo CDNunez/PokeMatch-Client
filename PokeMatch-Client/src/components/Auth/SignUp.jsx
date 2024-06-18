@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
 const formStyle = {
@@ -13,12 +12,11 @@ const formStyle = {
   width:"85vw"
 }
 
-function SignUp({updateToken}) {
-
+function SignUp() {
   return (
     <React.Fragment>
-      <Form>
-        <h1 style={{"textAlign":"center"}}>Register</h1>
+      <Form style={formStyle}>
+        <h1 style={{"textAlign":"center"}}>Sign Up</h1>
         <FormGroup row>
           <Label xs={4}>Username</Label>
           <Col xs={4}>
@@ -26,8 +24,6 @@ function SignUp({updateToken}) {
           id="exampleUsername"
           name="username"
           placeholder='Username'
-          autoComplete='off'
-          innerRef={usernameRef}
           type='text' />
           </Col>
         </FormGroup>
@@ -37,25 +33,22 @@ function SignUp({updateToken}) {
           <Input
           id="exampleEmail"
           name="email"
-          autoComplete='off'
-          innerRef={emailRef}
           placeholder='Email'
           type='email' />
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label xs={2}>Password</Label>
-          <Col xs={4}>
+          <Label md={4} style={{textAlign:"center"}}>Password</Label>
+          <Col md={4}>
           <Input
           id="examplePassword"
           name="password"
-          autoComplete='off'
-          innerRef={passwordRef}
           placeholder='Password'
-          type='password' />
+          type='password' 
+          />
           </Col>
         </FormGroup>
-        <Button type='submit'>
+        <Button>
           Sign Up
         </Button>
       </Form>
