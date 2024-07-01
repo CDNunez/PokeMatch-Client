@@ -4,7 +4,7 @@ import LogIn from './LogIn';
 import {Button, Container, Row, Col} from 'reactstrap';
 
 export default function Auth(props) {
-
+    //set button state to either LogIn or SignUp
     const [button, setButton] = useState('SignUp');
 
     const swapForm = () => {
@@ -12,7 +12,7 @@ export default function Auth(props) {
             setButton('SignUp') :
             setButton('LogIn')
     }
-
+    //function to display either form depending on button state
     const displayForm = () => {
         return (
             button === 'LogIn' ?
@@ -39,12 +39,13 @@ export default function Auth(props) {
 
 
     return (
-        <>
+        //displays button that calls on function that switches form -login or signup
+        <React.Fragment>
             <Button onClick={swapForm}
                 color='dark'>
                     {button}
                 </Button>
             {displayForm()}
-        </>
+        </React.Fragment>
   )
 }
