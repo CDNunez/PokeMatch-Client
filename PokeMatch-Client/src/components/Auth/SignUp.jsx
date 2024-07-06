@@ -14,7 +14,7 @@ const formStyle = {
   width:"85vw"
 }
 
-function SignUp() {
+function SignUp({ updateToken }) {
 
   //*useRef for data values: username, email, password
   const usernameRef = useRef();
@@ -24,48 +24,46 @@ function SignUp() {
   const navigate = useNavigate();
 
   //?handle submit function that passes info from client to db --> user info
-  async function handleSubmit(e){
-    //*prevents form from clearing values
+  async function handleSubmit(e) {
+    //*prevents form reset
     e.preventDefault();
-    //test function
-    // console.log('handleSubmit');
-    //*capture client data: username, email, password
+    //test --> works
+    // console.log('click');
+    //*converts ref values to variables
     const username = usernameRef.current.value;
-    const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    //test captured info
-    // console.log(`Username: ${username},Email: ${email}, Password:${password}`);
-    //*Convert captured data into JSON file
+    const email = emailRef.current.value;
+    //test --> works
+    // console.log(username,password,email);
+    //*convert values to JSON object
     let bodyObj = JSON.stringify({
-      username,email,password,teams:[]
-    });
-    //test bodyObj
+      username,email,password
+    })
+    //test -- works
     // console.log(bodyObj);
-    //*back-end api route
-    const url = 'http://localhost:4000/user/signup';
-    //*required headers for API to accept JSON object within the browser
+    //*backend url
+    const url = `http://localhost:4000/user/signup`
+    //*set headers
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
+    //*client response
     const requestOptions = {
       headers,
       body: bodyObj,
       method: 'POST'
     }
-    //*try/catch -> pass captured data to db and navigate to the next page or error handle
+    //*try/catch -> pass info to server and navigate client to next page
     try {
       const response = await fetch(url,requestOptions);
       const data = await response.json();
-      //test data is being captured
-      // console.log(data)
-      //*navigate to next page if user successfully created
+      console.log(data);
+
       if(data.message === 'User Created'){
-        //token update needed or use context
+        updateToken(data.token)
         navigate('/pokedex')
-      } else{
-        alert(data.message)
       }
     } catch (err) {
-      console.error(err.message);
+      console.error(err.message)
     }
   }
 
