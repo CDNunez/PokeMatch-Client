@@ -22,11 +22,11 @@ export default function AppRoutes() {
       setSessionToken(localStorage.getItem('token'));
     }
   }, [])
-
+//!routes are accessible despite not logged in -- vulnerability
   return (
     <Routes>
         <Route path='/' element={<Auth updateToken={updateToken} />} />
-        <Route path='/pokedex' element={<PokeDexIndex />} />
+        <Route path='/pokedex' element={<PokeDexIndex token={sessionToken}/>} />
         <Route path='/teams' element={<TeamsIndex />} />
         <Route path='/account' element={<AccountIndex />} />
         <Route path='/compare' element={<ComparatorIndex />} />
