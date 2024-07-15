@@ -20,41 +20,42 @@ function LogIn({updateToken}) {
   const passwordRef = useRef();
   const navigate = useNavigate();
 
-async function handleSubmit(e) {
-  e.preventDefault();
-  const body = JSON.stringify({
-    username: usernameRef.current.value,
-    email:emailRef.current.value,
-    password:passwordRef.current.value
-  });
-  // console.log(body);
-  const url = 'http://localhost:4000/user/login';
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-  const requestOptions = {
-    body: body,
-    headers,
-    method: "POST"
-  }
-  try {
-    const response = await fetch(url,requestOptions);
-    const data = await response.json();
-    console.log(data)
+// async function handleSubmit(e) {
+//   e.preventDefault();
+//   const body = JSON.stringify({
+//     username: usernameRef.current.value,
+//     email:emailRef.current.value,
+//     password:passwordRef.current.value
+//   });
+//   // console.log(body);
+//   const url = 'http://localhost:4000/user/login';
+//   const headers = new Headers();
+//   headers.append("Content-Type", "application/json");
+//   const requestOptions = {
+//     body: body,
+//     headers,
+//     method: "POST"
+//   }
+//   try {
+//     const response = await fetch(url,requestOptions);
+//     const data = await response.json();
+//     console.log(data)
 
-    if(data.message === 'Successful login'){
-      updateToken(data.token)
-      navigate('/pokedex')
-      //logs in but if user credentials are not correct it is not logging alert
-    } else {
-      alert(data.message)
-    }
-  } catch (error) {
-    console.error(error.message)
-  }
-}
+//     if(data.message === 'Successful login'){
+//       updateToken(data.token)
+//       navigate('/pokedex')
+//       //logs in but if user credentials are not correct it is not logging alert
+//     } else {
+//       alert(data.message)
+//     }
+//   } catch (error) {
+//     console.error(error.message)
+//   }
+// }
 
   return (
     <React.Fragment>
+      {/* changed onSubmit={handleSubmit} */}
       <Form style={formStyle} onSubmit={handleSubmit}>
         <h1 style={{"textAlign":"center"}}>Log In</h1>
         <FormGroup row>
