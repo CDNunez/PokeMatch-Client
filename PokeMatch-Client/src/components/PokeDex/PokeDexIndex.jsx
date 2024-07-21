@@ -6,7 +6,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 function PokeDexIndex() {
 
   const navigate = useNavigate();
-  const {isAuthenticated, sessionToken} = useAuthContext();
+  const {sessionToken} = useAuthContext();
 
   async function click(){
     console.log(sessionToken)
