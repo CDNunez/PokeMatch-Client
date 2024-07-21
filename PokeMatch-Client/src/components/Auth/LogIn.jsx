@@ -1,5 +1,6 @@
-import React, {useRef} from 'react';
+import React, {useRef} from 'react'
 import { useNavigate } from 'react-router';
+import { useAuthContext } from '../../contexts/AuthContext'
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
 const formStyle = {
@@ -13,49 +14,55 @@ const formStyle = {
   width:"85vw"
 }
 
-function LogIn({updateToken}) {
+function LogIn() {
 
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
 
-async function handleSubmit(e) {
-  e.preventDefault();
-  const body = JSON.stringify({
-    username: usernameRef.current.value,
-    email:emailRef.current.value,
-    password:passwordRef.current.value
-  });
-  // console.log(body);
-  const url = 'http://localhost:4000/user/login';
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-  const requestOptions = {
-    body: body,
-    headers,
-    method: "POST"
-  }
-  try {
-    const response = await fetch(url,requestOptions);
-    const data = await response.json();
-    console.log(data)
+  const {updateToken} = useAuthContext();
+  // function click(e){
+  //   e.preventDefault()
+  //   console.log(usernameRef.current.value,emailRef.current.value,passwordRef.current.value);
+  // }
 
-    if(data.message === 'Successful login'){
-      updateToken(data.token)
-      navigate('/pokedex')
-      //logs in but if user credentials are not correct it is not logging alert
-    } else {
-      alert(data.message)
+  async function handleLogin(e){
+    e.preventDefault()
+    const body = JSON.stringify({
+      username: usernameRef.current.value,
+      email:emailRef.current.value,
+      password:passwordRef.current.value
+    });
+    // console.log(body);
+    const url = 'http://localhost:4000/user/login';
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const requestOptions = {
+      body: body,
+      headers,
+      method: "POST"
     }
-  } catch (error) {
-    console.error(error.message)
+    try {
+      const response = await fetch(url,requestOptions);
+      const data = await response.json();
+      console.log(data)
+  
+      if(data.message === 'Successful login'){
+        updateToken(data.token)
+        navigate('/pokedex')
+        //logs in but if user credentials are not correct it is not logging alert
+      } else {
+        alert(data.message)
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
   }
-}
 
   return (
     <React.Fragment>
-      <Form style={formStyle} onSubmit={handleSubmit}>
+      <Form style={formStyle} onSubmit={handleLogin}>
         <h1 style={{"textAlign":"center"}}>Log In</h1>
         <FormGroup row>
           <Label xs={4}>Username</Label>

@@ -1,10 +1,8 @@
-//?Imports - react, router, app routes
 import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 import AppRoutes from './AppRoutes';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
-
   return (
     <Router>
         <AppRoutes />
@@ -12,5 +10,4 @@ function App() {
   )
 }
 
-//?Exports app to main.jsx
 export default App

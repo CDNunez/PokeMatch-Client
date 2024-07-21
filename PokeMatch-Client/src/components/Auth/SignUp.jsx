@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 //!temporary style -- change required
 const formStyle = {
@@ -14,7 +15,7 @@ const formStyle = {
   width:"85vw"
 }
 
-function SignUp({ updateToken }) {
+function SignUp() {
 
   //*useRef for data values: username, email, password
   const usernameRef = useRef();
@@ -22,6 +23,8 @@ function SignUp({ updateToken }) {
   const passwordRef = useRef();
   //*useNavigate to navigate back to login page after successful sign up
   const navigate = useNavigate();
+
+  const {updateToken} = useAuthContext();
 
   //?handle submit function that passes info from client to db --> user info
   async function handleSubmit(e) {

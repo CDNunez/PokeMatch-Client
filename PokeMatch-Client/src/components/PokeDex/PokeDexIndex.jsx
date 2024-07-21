@@ -1,44 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import {Container} from 'reactstrap';
-import Pokemon from './Pokemon';
+import React from 'react';
+import { useNavigate } from 'react-router';
+import { Button } from 'reactstrap';
+import { useAuthContext } from '../../contexts/AuthContext';
 
-function PokeDexIndex(props) {
-//!none of this currently works to display pokemon
-  const [pokemons, setPokemons] = useState([]);
+function PokeDexIndex() {
 
-  const fetchPokemon = async () =>{
-    const url = 'http://localhost:4000/pokemon';
-    const requestOptions = {
-      method: 'GET',
-      headers: new Headers({
-        "Authorization":props.token
-      })
-    }
-    try {
-      const response = await fetch(url,requestOptions);
-      const data = await response.json();
-      setPokemons(data.result)
-    } catch (error) {
-      console.error(error.message);
-    }
+  const navigate = useNavigate();
+  const {isAuthenticated, sessionToken} = useAuthContext();
+
+  async function click(){
+    console.log(sessionToken)
+    navigate('/teams')
   }
-
-  useEffect(()=> {
-    if(props.token){
-      fetchPokemon();
-    }
-  },[props.token])
 
   return (
     <React.Fragment>
       <h1>PokeDex</h1>
-      <Container>
-        <Pokemon 
-        token={props.token}
-        fetchPokemon={fetchPokemon}
-        pokemons={pokemons}
-        />
-      </Container>
+      <Button onClick={click}>teams</Button>
     </React.Fragment>
   )
 }
