@@ -1,8 +1,12 @@
 import React from 'react'
+import NavigationBar from '../NavigationBar/NavigationBar'
 
 function AccountIndex() {
   return (
-    <div>AccountIndex</div>
+    <>
+    <h1>AccountIndex</h1>
+    <NavigationBar />
+    </>
   )
 }
 

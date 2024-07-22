@@ -1,8 +1,12 @@
 import React from 'react'
+import NavigationBar from '../NavigationBar/NavigationBar'
 
 function TeamsIndex() {
   return (
-    <div>TeamsIndex</div>
+    <>
+    <h1>TeamsIndex</h1>
+    <NavigationBar />
+    </>
   )
 }
 

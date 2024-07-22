@@ -1,8 +1,12 @@
 import React from 'react'
+import NavigationBar from '../NavigationBar/NavigationBar'
 
 function ComparatorIndex() {
   return (
-    <div>ComparatorIndex</div>
+    <>
+    <h1>Comparator Index</h1>
+    <NavigationBar />
+    </>
   )
 }
 
