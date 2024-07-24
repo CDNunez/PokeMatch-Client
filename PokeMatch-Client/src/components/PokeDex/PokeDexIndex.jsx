@@ -7,13 +7,12 @@ import NavigationBar from '../NavigationBar/NavigationBar';
 import PokemonCard from './PokeCard/PokemonCard';
 
 function PokeDexIndex() {
-
   return (
     <React.Fragment>
       <h1>PokeDex</h1>
       <NavigationBar />
       <Container>
-        {/* <PokemonCard /> */}
+        <PokemonCard />
       </Container>
     </React.Fragment>
   )
