@@ -1,11 +1,14 @@
 import React from 'react'
 import NavigationBar from '../NavigationBar/NavigationBar'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
 function TeamsIndex() {
   return (
     <>
-    <h1>TeamsIndex</h1>
+    <Header />
     <NavigationBar />
+    <Footer />
     </>
   )
 }

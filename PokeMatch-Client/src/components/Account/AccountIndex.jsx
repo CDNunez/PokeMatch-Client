@@ -1,11 +1,14 @@
 import React from 'react'
 import NavigationBar from '../NavigationBar/NavigationBar'
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 
 function AccountIndex() {
   return (
     <>
-    <h1>AccountIndex</h1>
+    <Header />
     <NavigationBar />
+    <Footer />
     </>
   )
 }
