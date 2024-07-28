@@ -4,6 +4,12 @@ import { Nav, Navbar, NavItem, NavLink } from 'reactstrap'
 
 function NavigationBar() {
 
+    const navbarStyle = {
+        width: '50%',
+        margin: '0 auto',
+        color: 'black'
+    }
+
     const navigate = useNavigate();
 
     function toPokedex(){
@@ -21,7 +27,7 @@ function NavigationBar() {
 
   return (
     <React.Fragment>
-        <Navbar>
+        <Navbar style={navbarStyle}>
             <Nav>
                 <NavItem>
                     <NavLink onClick={toPokedex}>Pokedex</NavLink>

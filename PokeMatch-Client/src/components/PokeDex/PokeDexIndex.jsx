@@ -1,22 +1,22 @@
+//?Imports
+//*Dependencies
 import React from 'react';
-import { useNavigate } from 'react-router';
-import { Button } from 'reactstrap';
-import { useAuthContext } from '../../contexts/AuthContext';
+import { Container } from 'reactstrap';
+//*Components
+import NavigationBar from '../NavigationBar/NavigationBar';
+import PokemonCard from './PokeCard/PokemonCard';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 
 function PokeDexIndex() {
-
-  const navigate = useNavigate();
-  const {sessionToken} = useAuthContext();
-
-  async function click(){
-    console.log(sessionToken)
-    navigate('/teams')
-  }
-
   return (
     <React.Fragment>
-      <h1>PokeDex</h1>
-      <Button onClick={click}>teams</Button>
+      <Header />
+      <NavigationBar />
+      <Container style={{backgroundColor:'cyan'}}>
+        <PokemonCard />
+      </Container>
+      <Footer />
     </React.Fragment>
   )
 }

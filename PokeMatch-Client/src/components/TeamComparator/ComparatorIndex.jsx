@@ -1,8 +1,15 @@
 import React from 'react'
+import NavigationBar from '../NavigationBar/NavigationBar'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
 function ComparatorIndex() {
   return (
-    <div>ComparatorIndex</div>
+    <>
+    <Header />
+    <NavigationBar />
+    <Footer />
+    </>
   )
 }
 
