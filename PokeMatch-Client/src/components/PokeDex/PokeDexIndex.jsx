@@ -13,7 +13,7 @@ function PokeDexIndex() {
     <React.Fragment>
       <Header />
       <NavigationBar />
-      <Container>
+      <Container style={{backgroundColor:'cyan'}}>
         <PokemonCard />
       </Container>
       <Footer />

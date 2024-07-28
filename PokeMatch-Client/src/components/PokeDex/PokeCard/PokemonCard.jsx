@@ -1,6 +1,7 @@
 //?Imports
 import React, { useEffect, useRef, useState } from 'react'
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
+import CardInfo from './CardInfo';
 
 //*Component
 function PokemonCard() {
@@ -45,9 +46,13 @@ function PokemonCard() {
       //await response
       const res = await fetch(url,requestOptions);
       //parse res into json format
-      const data = await res.json();
+      const fetchedPokemon = await res.json();
       //test
-      console.log(data);
+      console.log(fetchedPokemon[150]);
+      console.log(fetchedPokemon.length);
+      // data.forEach((pokemon)=>{
+      //   console.log(pokemon)
+      // });
     } catch (error) {
       console.error(error.message)
     }

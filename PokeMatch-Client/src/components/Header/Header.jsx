@@ -32,6 +32,7 @@ function Header() {
     <Navbar style={headerStyle}>
         {swapNavBrand()}
         <Nav>
+            {/* have to give log out function */}
             <NavItem><NavLink>Log Out</NavLink></NavItem>
         </Nav>
     </Navbar>

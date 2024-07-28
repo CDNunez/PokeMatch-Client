@@ -6,7 +6,8 @@ function NavigationBar() {
 
     const navbarStyle = {
         width: '50%',
-        margin: '0 auto'
+        margin: '0 auto',
+        color: 'black'
     }
 
     const navigate = useNavigate();

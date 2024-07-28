@@ -9,13 +9,13 @@ function CardInfo({pokemonName, number, primaryType, secondaryType, entry}) {
         <CardTitle>{pokemonName}</CardTitle>
         <CardText>{number}</CardText>
       </CardBody>
-      <ListGroup style={{margin:'10px auto'}}>
+      {/* <ListGroup style={{margin:'10px auto'}}>
         <ListGroupItem>{primaryType}</ListGroupItem>
         <ListGroupItem>{secondaryType}</ListGroupItem>
       </ListGroup>
       <CardFooter>
         <CardText>{entry}</CardText>
-      </CardFooter>
+      </CardFooter> */}
       </Card>
     </React.Fragment>
   )
