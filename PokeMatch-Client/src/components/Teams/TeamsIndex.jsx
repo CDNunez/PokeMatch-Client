@@ -1,8 +1,15 @@
 import React from 'react'
+import NavigationBar from '../NavigationBar/NavigationBar'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
 function TeamsIndex() {
   return (
-    <div>TeamsIndex</div>
+    <>
+    <Header />
+    <NavigationBar />
+    <Footer />
+    </>
   )
 }
 
