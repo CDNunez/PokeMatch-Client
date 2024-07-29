@@ -4,8 +4,9 @@ import { Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, R
 import CardInfo from './CardInfo';
 
 //*Component
-function PokemonCard() {
+function PokemonCard(props) {
 
+  //?toggles
   //*toggle buttons use states
   const [genDropdownOpen, setGenDropdownOpen] = useState(false);
   const [primaryTypeDropdownOpen, setPrimaryTypeDropdownOpen] = useState(false);
@@ -14,6 +15,7 @@ function PokemonCard() {
   const toggleGen = () => setGenDropdownOpen((prevState) => !prevState);
   const togglePrimaryType = () => setPrimaryTypeDropdownOpen((prevState) => !prevState);
 
+  //?filters
   //*use state for filters : filter by gen, filter by type, etc...
   const [pokemonGen, setPokemonGen] = useState('');
   const [pokemonPrimaryType, setPokemonPrimaryType] = useState('');
@@ -33,6 +35,22 @@ function PokemonCard() {
     fetchByPrimary(primary);
   }
 
+  //?functions
+
+  // function displayCard(filter){
+  //   console.log(filter[150].pokemonName);
+  //   return(
+  //     <Container>
+  //       <Row>
+  //         <CardInfo
+  //         pokemonName={filter[150].pokemonName}
+  //         number={filter[150].number} 
+  //         />
+  //       </Row>
+  //     </Container>
+  //   )
+  // }
+
   //*fetch by gen
   async function fetchPokemonByGen(gen){
     // console.log('test');
@@ -48,11 +66,21 @@ function PokemonCard() {
       //parse res into json format
       const fetchedPokemon = await res.json();
       //test
-      console.log(fetchedPokemon[150]);
-      console.log(fetchedPokemon.length);
-      // data.forEach((pokemon)=>{
-      //   console.log(pokemon)
-      // });
+        const displayCard = (filter) => {
+    console.log(filter[150].pokemonName);
+    return(
+      <Container>
+        <Row>
+          <CardInfo
+          pokemonName={filter[150].pokemonName}
+          number={filter[150].number} 
+          />
+        </Row>
+      </Container>
+    )
+  }
+      displayCard(fetchedPokemon);
+   
     } catch (error) {
       console.error(error.message)
     }
@@ -75,6 +103,7 @@ function PokemonCard() {
       console.error(error.message)
     }
   }
+  //?render
   return (
     <>
     <Dropdown isOpen={genDropdownOpen} toggle={toggleGen} direction='down'>
@@ -86,6 +115,7 @@ function PokemonCard() {
     </Dropdown>
     <Dropdown isOpen={primaryTypeDropdownOpen} toggle={togglePrimaryType} direction='down'>
       <DropdownToggle caret>Primary Type</DropdownToggle>
+      {/* can condense this with map method or forEach loop */}
       <DropdownMenu>
         <DropdownItem onClick={()=>handlePrimary('Fire')}>Fire</DropdownItem>
         <DropdownItem onClick={()=>handlePrimary('Water')}>Water</DropdownItem>
@@ -104,6 +134,7 @@ function PokemonCard() {
         <DropdownItem onClick={()=>handlePrimary('Rock')}>Rock</DropdownItem>
       </DropdownMenu>
     </Dropdown>
+    {pokemonGen === '1' && <CardInfo />}
     </>
   )
 }
