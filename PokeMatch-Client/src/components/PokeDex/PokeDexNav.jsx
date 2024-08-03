@@ -5,16 +5,18 @@ import { usePokedexContext } from '../../contexts/PokeDexContext';
 
 function PokeDexNav() {
 
-    const {handleGen, pokemonGen, handlePrimary} = usePokedexContext();
+    const {handleGen, pokemonGen, handlePrimary, handleEffective} = usePokedexContext();
 
   //?toggles
   //*toggle buttons use states
   const [genDropdownOpen, setGenDropdownOpen] = useState(false);
   const [primaryTypeDropdownOpen, setPrimaryTypeDropdownOpen] = useState(false);
+  const [effectiveDropdownOpen, setEffectiveDropdownOpen] = useState(false);
 
   //*update toggle
   const toggleGen = () => setGenDropdownOpen((prevState) => !prevState);
   const togglePrimaryType = () => setPrimaryTypeDropdownOpen((prevState) => !prevState);    
+  const toggleEffectiveType = () => setEffectiveDropdownOpen((prevState) => !prevState);
 
   //*toggle arrays
   const genValues = ['1', '2'];
@@ -42,6 +44,16 @@ function PokeDexNav() {
                     ))
                 }
                 </DropdownMenu>
+    </Dropdown>
+    <Dropdown isOpen={effectiveDropdownOpen} toggle={toggleEffectiveType} direction='down'>
+        <DropdownToggle caret>Effectiveness</DropdownToggle>
+        <DropdownMenu>
+            {
+                primaryTypeValues.map((type, index)=>(
+                    <DropdownItem key={index} onClick={()=>handleEffective(type)}>{type}</DropdownItem>
+                ))
+            }
+        </DropdownMenu>
     </Dropdown>
     </>
   )

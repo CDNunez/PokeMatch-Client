@@ -9,6 +9,7 @@ export const PokeDexProvider = ({children}) => {
   //use state for filters : filter by gen, filter by type, etc...
   const [pokemonGen, setPokemonGen] = useState('');
   const [pokemonPrimaryType, setPokemonPrimaryType] = useState('');
+  const [effectiveType, setEffectiveType] = useState('');
 
   //test
   // function logGen(value){
@@ -31,6 +32,12 @@ export const PokeDexProvider = ({children}) => {
     fetchByPrimary(primary);
   }
 
+
+  const handleEffective = (effective) => {
+    setEffectiveType(effective);
+    fetchByEffective(effective);
+  }
+
   //?functions
 
   //test
@@ -39,8 +46,9 @@ export const PokeDexProvider = ({children}) => {
   //   value.forEach((pokemon)=><CardInfo pokemonName={pokemon.pokemonName} number={pokemon.number}/>)
   // }
 
-  let [genArray, setGenArray] = useState([]);
-  let [typeArray, setTypeArray] = useState([]);
+  // let [genArray, setGenArray] = useState([]);
+  // let [typeArray, setTypeArray] = useState([]);
+  let [displayArray, setDisplayArray] = useState([])
 
   // //*fetch by gen
   async function fetchPokemonByGen(gen){
@@ -59,8 +67,10 @@ export const PokeDexProvider = ({children}) => {
       //test
       // console.log(fetchedPokemon[150].pokemonName);
       // displayFetched(fetchedPokemon);
-      setGenArray(fetchedPokemon);
-      setTypeArray([]);
+      // setGenArray(fetchedPokemon);
+      // setTypeArray([]);
+      setDisplayArray([]);
+      setDisplayArray(fetchedPokemon);
    
     } catch (error) {
       console.error(error.message)
@@ -77,15 +87,35 @@ export const PokeDexProvider = ({children}) => {
     try {
       const res = await fetch(url,requestOptions);
       const data = await res.json();
-      setTypeArray(data);
-      setGenArray([]);
+      // setTypeArray(data);
+      // setGenArray([]);
+      setDisplayArray([]);
+      setDisplayArray(data);
     } catch (error) {
       console.error(error.message)
     }
   }
-
+  
+  //*fetch by effective type
+  async function fetchByEffective(effective){
+    // console.log('test');
+    const url = `http://localhost:4000/pokemon/advantage/${effective}`;
+    const requestOptions = {
+      method: 'GET'
+    }
+    try {
+      const res = await fetch(url,requestOptions);
+      const data = await res.json();
+      // setTypeArray(data);
+      // setGenArray([]);
+      setDisplayArray([]);
+      setDisplayArray(data);
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
   return (
-    <pokedexContext.Provider value={{handleGen, handlePrimary, fetchPokemonByGen, genArray, typeArray, pokemonGen, pokemonPrimaryType}}>{children}</pokedexContext.Provider>
+    <pokedexContext.Provider value={{handleGen, handlePrimary, handleEffective, fetchPokemonByGen, displayArray, pokemonGen, pokemonPrimaryType}}>{children}</pokedexContext.Provider>
   )
 }
 

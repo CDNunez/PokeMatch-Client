@@ -7,7 +7,7 @@ import CardInfo from './CardInfo';
 //*Component
 function PokemonCard() {
 
-  const {genArray, typeArray} = usePokedexContext();
+  const {displayArray} = usePokedexContext();
 
   // genArray.forEach((pokemon)=> console.log(pokemon.pokemonName));
   // typeArray.forEach((pokemon)=> console.log(pokemon.pokemonName));
@@ -16,22 +16,7 @@ function PokemonCard() {
     <>
     <Row>
     {
-      genArray.map((pokemon,index)=>(
-        <Col md='4' key={index}>
-          <CardInfo
-          pokemonName={pokemon.pokemonName}
-          number={pokemon.number}
-          primaryType={pokemon.primaryType}
-          secondaryType={pokemon.secondaryType}
-          entry={pokemon.entry} 
-          />
-        </Col>
-      ))
-    }
-    </Row>
-    <Row>
-    {
-      typeArray.map((pokemon,index)=>(
+      displayArray.map((pokemon,index)=>(
         <Col md='4' key={index}>
           <CardInfo
           pokemonName={pokemon.pokemonName}
