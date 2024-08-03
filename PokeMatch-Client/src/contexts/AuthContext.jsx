@@ -20,6 +20,12 @@ export const AuthProvider = ({children}) => {
     setSessionToken(newToken)
   };
 
+  //*Capture userId
+  const [userId, setUserId] = useState('');
+  function updateUserId(id){
+    setUserId(id);
+  }
+
   useEffect(()=>{
     if(localStorage.getItem('token')){
       setSessionToken(localStorage.getItem('token'));
@@ -29,7 +35,7 @@ export const AuthProvider = ({children}) => {
 
   return (
     //*provide context to children elements
-    <authContext.Provider value={{contextCheck, updateToken, sessionToken}}>{children}</authContext.Provider>
+    <authContext.Provider value={{contextCheck, updateToken, sessionToken, userId, updateUserId}}>{children}</authContext.Provider>
   )
 }
 
