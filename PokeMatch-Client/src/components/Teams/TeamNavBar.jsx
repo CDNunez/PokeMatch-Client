@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import {useAuthContext} from '../../contexts/AuthContext';
+import { useTeamsContext } from '../../contexts/TeamsContext';
 
 function TeamNavBar() {
 
@@ -19,56 +20,42 @@ function TeamNavBar() {
 
   //Contexts
   const {userId, sessionToken} = useAuthContext();
+  const {fetchTeams,deleteAllTeams} = useTeamsContext();
+
+ //*Add Team
+ async function handleAddTeam(){
+  // console.log(membersRef.current.value)
+  const body = JSON.stringify({
+    teamName: teamNameRef.current.value,
+    amountOfMembers:membersRef.current.value,
+    teamGeneration: genRef.current.value
+  });
+  // console.log(body)
+  const url = `http://localhost:4000/poketeam/${userId}/pokeTeams`;
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  headers.append("Authorization", sessionToken );
+  const requestOptions = {
+    body: body,
+    headers: headers,
+    method: "POST"
+  }
+  try {
+    const response = await fetch(url,requestOptions);
+    const data = await response.json();
+    toggle();
+    fetchTeams();
+
+    console.log(data);
+    console.log("team ID:",data._id);
+  } catch (err) {
+    console.error(err.message);
+  }
+}
 
   //test
   function checkToken(){
     console.log(sessionToken);
-  }
-
-  //*Delete All Teams
-  async function deleteAllTeams(){
-    const url=`http://localhost:4000/poketeam/${userId}/pokeTeams`;
-    let requestOptions = {
-      headers: new Headers({
-        'Authorization': sessionToken
-      }),
-      method: "DELETE"
-    }
-
-    try {
-      let response = await fetch(url, requestOptions);
-      let data = await response.json();
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-
-  //*Add Team
-  async function handleAddTeam(){
-    // console.log(membersRef.current.value)
-    const body = JSON.stringify({
-      teamName: teamNameRef.current.value,
-      amountOfMembers:membersRef.current.value,
-      teamGeneration: genRef.current.value
-    });
-    // console.log(body)
-    const url = `http://localhost:4000/poketeam/${userId}/pokeTeams`;
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Authorization", sessionToken );
-    const requestOptions = {
-      body: body,
-      headers: headers,
-      method: "POST"
-    }
-    try {
-      const response = await fetch(url,requestOptions);
-      const data = await response.json();
-      console.log(data);
-      console.log("team ID:",data._id);
-    } catch (err) {
-      console.error(err.message);
-    }
   }
 
   return (
