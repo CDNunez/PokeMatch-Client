@@ -29,7 +29,7 @@ function TeamCard() {
             members={team.members}
             teamTypes={team.teamTypes}
             typesTeamIsWeakTo={team.typesTeamIsWeakTo}
-            typesTeamsIsStrongAgainst={team.typesTeamsIsStrongAgainst}
+            typesTeamIsStrongAgainst={team.typesTeamIsStrongAgainst}
             _id={team._id}
             />
           </Col>
