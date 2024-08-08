@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Button, ButtonGroup, Card, CardBody, CardFooter, CardText, CardTitle, Collapse, ListGroup, ListGroupItem } from 'reactstrap'
+import { Button, ButtonGroup, Card, CardBody, CardFooter, CardText, CardTitle, Collapse, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { useTeamsContext } from '../../../contexts/TeamsContext'
 
 //props passed back to TeamCard.jsx to build out card
 function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes, typesTeamIsWeakTo, typesTeamIsStrongAgainst, _id}) {
 
   //context for delete team and add random pokemon buttons
-  const {deleteOneTeam, addOneRandom} = useTeamsContext();
+  const {deleteOneTeam, addOneRandom, duplicateTeam} = useTeamsContext();
 
   //use states and toggles for collapses
   const [memberCollapse, setMemberCollapse] = useState(false);
@@ -21,8 +21,80 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
   const [strongCollapse, setStrongCollapse] = useState(false);
   const toggleStrongCollapse = () => setStrongCollapse(!strongCollapse);
 
+  //Modal - Edit Team
+  const [modal, setModal]=useState(false);
+  const toggle = () => setModal(!modal);
+
+  //arrays
+  const memberValues = ['2','3','4','5','6'];
+  const genValues = [null, '1', '2', '3', '4'];
+  
+  //Edit Team useState
+  const [team, setTeamName] = useState('');
+  const [teamMembers, setTeamMembers] = useState('');
+  const [teamGen, setTeamGen] = useState('');
+  const [teamAmountOfMembers, setTeamAmountOfMembers] = useState('');
+
+  //!need to pass down teamId to getOneById and set form values to be edited
+  //*Edit Team Func
+  async function editTeam() {
+    console.log('edit team')
+  }
+
   return (
     <>
+
+    {/* Modal For Edit Team */}
+    <Modal isOpen={modal} toggle={toggle}>
+      <ModalHeader toggle={toggle}>Edit Team</ModalHeader>
+      <ModalBody>
+        <Form>
+          <FormGroup>
+            <Label>Team Name</Label>
+            <Input
+            value={team} 
+            name='teamName'
+            type='text'
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="memberSelect">Amount of Members</Label>
+            <Input
+            value={teamAmountOfMembers}
+            id="memberSelect" 
+            name="memberSelect"
+            type='select'
+            >
+            {
+              memberValues.map((value,index)=>(
+                <option key={index}>{value}</option>
+              ))
+            }
+            </Input>
+          </FormGroup>
+          <FormGroup>
+          <Label for='genSelect'>Team Generation</Label>
+            <Input 
+            value={teamGen}
+            id='genSelect'
+            name='genSelect'
+            type='select'
+            >
+            {
+              genValues.map((value,index)=>(
+                <option key={index}>{value}</option>
+              ))
+            }
+            </Input>
+          </FormGroup>
+        </Form>
+        <ModalFooter>
+          <Button onClick={editTeam}>Submit</Button>
+          <Button onClick={toggle}>Cancel</Button>
+        </ModalFooter>
+      </ModalBody>
+    </Modal>
+
     <Card style={{margin:'5px auto'}}>
       <CardBody>
         <CardTitle><h3>{teamName}</h3></CardTitle>
@@ -90,8 +162,13 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
         </Collapse>        
       <CardFooter>
           <ButtonGroup>
-          <Button onClick={()=>deleteOneTeam(_id)}>Delete Team</Button>
+            <Button>Add Pokemon</Button>
           <Button onClick={()=> addOneRandom(_id)}>Add Random Pokemon</Button>
+          </ButtonGroup>
+          <ButtonGroup>
+          <Button onClick={toggle}>Edit Team</Button>
+          <Button onClick={()=> duplicateTeam(_id)}>Duplicate Team</Button>
+          <Button onClick={()=>deleteOneTeam(_id)}>Delete Team</Button>
           </ButtonGroup>
       </CardFooter>
     </Card>

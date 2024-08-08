@@ -48,6 +48,27 @@ export const TeamsProvider= ({children}) => {
     }
   }
 
+  //*Duplicate Team
+  async function duplicateTeam(teamId) {
+    const url = `http://localhost:4000/poketeam/${userId}/pokeTeams/${teamId}`
+    let requestOptions = {
+      headers: new Headers({
+        'Authorization': sessionToken,
+      }),
+      method: "POST"
+    }
+    try {
+      console.log('duplicate route');
+      let response = await fetch(url,requestOptions);
+      let data = response.json();
+      if(data){
+        fetchTeams();
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   //*Delete One Team
   async function deleteOneTeam(teamId){
     const url = `http://localhost:4000/poketeam/${userId}/pokeTeams/${teamId}`
@@ -60,6 +81,7 @@ export const TeamsProvider= ({children}) => {
     try {
       let res = await fetch(url, requestOptions);
       let data = await res.json();
+      console.log('duplicate :',data)
       if(data){
         fetchTeams();
       }
@@ -90,7 +112,7 @@ export const TeamsProvider= ({children}) => {
 
 
   return (
-    <teamsContext.Provider value={{fetchTeams, deleteAllTeams, deleteOneTeam, addOneRandom, teams}}>{children}</teamsContext.Provider>
+    <teamsContext.Provider value={{fetchTeams, deleteAllTeams, deleteOneTeam, addOneRandom, duplicateTeam, teams}}>{children}</teamsContext.Provider>
   )
 }
 
