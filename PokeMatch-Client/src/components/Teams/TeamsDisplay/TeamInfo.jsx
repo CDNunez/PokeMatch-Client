@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Button, ButtonGroup, Card, CardBody, CardFooter, CardText, CardTitle, Collapse, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { useTeamsContext } from '../../../contexts/TeamsContext'
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 //props passed back to TeamCard.jsx to build out card
 function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes, typesTeamIsWeakTo, typesTeamIsStrongAgainst, _id}) {
 
   //context for delete team and add random pokemon buttons
-  const {deleteOneTeam, addOneRandom, duplicateTeam} = useTeamsContext();
+  const {deleteOneTeam, addOneRandom, duplicateTeam, fetchTeams} = useTeamsContext();
+  const {userId, sessionToken} = useAuthContext();
 
   //use states and toggles for collapses
   const [memberCollapse, setMemberCollapse] = useState(false);
@@ -31,14 +33,67 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
   
   //Edit Team useState
   const [team, setTeamName] = useState('');
-  const [teamMembers, setTeamMembers] = useState('');
   const [teamGen, setTeamGen] = useState('');
   const [teamAmountOfMembers, setTeamAmountOfMembers] = useState('');
 
   //!need to pass down teamId to getOneById and set form values to be edited
+
+  //*Get One Team Func
+  const getOne = async (teamId) =>{
+    console.log('team Id: ',teamId);
+    const url = `http://localhost:4000/poketeam/${userId}/pokeTeams/${teamId}`
+    const requestOptions={
+      headers: new Headers({
+        'Authorization': sessionToken
+      })
+    }
+    try {
+      const res = await fetch(url, requestOptions);
+      const data = await res.json();
+      //testing
+      // console.log('getOne: ',data);
+      // console.log(data.teamName);
+      setTeamName(data.teamName)
+      setTeamGen(data.teamGeneration)
+      setTeamAmountOfMembers(data.amountOfMembers)
+      console.log('team name: ',team,'Gen: ', teamGen,'Members: ', teamAmountOfMembers);
+
+    } catch (error) {
+      console.error(error.message)
+    }
+    toggle();
+  }
+
   //*Edit Team Func
-  async function editTeam() {
+  const editTeam = async (teamId) => {
     console.log('edit team')
+    console.log('ID: ',teamId);
+    const url = `http://localhost:4000/poketeam/${userId}/pokeTeams/${teamId}`
+    let body = JSON.stringify({
+      teamName: team,
+      teamGeneration: teamGen,
+      amountOfMembers: teamAmountOfMembers
+    })
+    // console.log('Body: ',body)
+    const requestOptions = {
+      headers: new Headers({
+        'Authorization': sessionToken,
+        'Content-Type': 'application/json'
+      }),
+      body,
+      method: 'PUT'
+    }
+    try {
+      const res = await fetch(url, requestOptions);
+      const data = await res.json();
+      console.log(data);
+      if(data){
+        fetchTeams();
+        toggle();
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
   }
 
   return (
@@ -52,7 +107,8 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
           <FormGroup>
             <Label>Team Name</Label>
             <Input
-            value={team} 
+            defaultValue={team}
+            onChange={e => setTeamName(e.target.value)} 
             name='teamName'
             type='text'
             />
@@ -60,7 +116,8 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
           <FormGroup>
             <Label for="memberSelect">Amount of Members</Label>
             <Input
-            value={teamAmountOfMembers}
+            defaultValue={teamAmountOfMembers}
+            onChange={e => setTeamAmountOfMembers(e.target.value)}
             id="memberSelect" 
             name="memberSelect"
             type='select'
@@ -75,7 +132,8 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
           <FormGroup>
           <Label for='genSelect'>Team Generation</Label>
             <Input 
-            value={teamGen}
+            defaultValue={teamGen}
+            onChange={e=>setTeamAmountOfMembers(e.target.value)}
             id='genSelect'
             name='genSelect'
             type='select'
@@ -89,12 +147,13 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
           </FormGroup>
         </Form>
         <ModalFooter>
-          <Button onClick={editTeam}>Submit</Button>
+          <Button onClick={() => editTeam(_id)}>Submit</Button>
           <Button onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </ModalBody>
     </Modal>
 
+    {/* Card Info  */}
     <Card style={{margin:'5px auto'}}>
       <CardBody>
         <CardTitle><h3>{teamName}</h3></CardTitle>
@@ -166,7 +225,7 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
           <Button onClick={()=> addOneRandom(_id)}>Add Random Pokemon</Button>
           </ButtonGroup>
           <ButtonGroup>
-          <Button onClick={toggle}>Edit Team</Button>
+          <Button onClick={()=>getOne(_id)}>Edit Team</Button>
           <Button onClick={()=> duplicateTeam(_id)}>Duplicate Team</Button>
           <Button onClick={()=>deleteOneTeam(_id)}>Delete Team</Button>
           </ButtonGroup>
