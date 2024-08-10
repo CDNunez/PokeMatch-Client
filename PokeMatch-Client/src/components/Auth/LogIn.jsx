@@ -21,7 +21,7 @@ function LogIn() {
   const passwordRef = useRef();
   const navigate = useNavigate();
 
-  const {updateToken} = useAuthContext();
+  const {updateToken, updateUserId} = useAuthContext();
   // function click(e){
   //   e.preventDefault()
   //   console.log(usernameRef.current.value,emailRef.current.value,passwordRef.current.value);
@@ -47,9 +47,11 @@ function LogIn() {
       const response = await fetch(url,requestOptions);
       const data = await response.json();
       console.log(data)
+      console.log(data.user._id)
   
       if(data.message === 'Successful login'){
         updateToken(data.token)
+        updateUserId(data.user._id)
         navigate('/pokedex')
         //logs in but if user credentials are not correct it is not logging alert
       } else {

@@ -24,7 +24,7 @@ function SignUp() {
   //*useNavigate to navigate back to login page after successful sign up
   const navigate = useNavigate();
 
-  const {updateToken} = useAuthContext();
+  const {updateToken, updateUserId} = useAuthContext();
 
   //?handle submit function that passes info from client to db --> user info
   async function handleSubmit(e) {
@@ -63,6 +63,7 @@ function SignUp() {
 
       if(data.message === 'User Created'){
         updateToken(data.token)
+        updateUserId(data.user._id)
         navigate('/pokedex')
       }
     } catch (err) {

@@ -1,21 +1,23 @@
 //?Imports
 //*Dependencies
 import React from 'react';
-import { Container } from 'reactstrap';
 //*Components
 import NavigationBar from '../NavigationBar/NavigationBar';
-import PokemonCard from './PokeCard/PokemonCard';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import CardContainer from './PokeCard/CardContainer';
+import { Container } from 'reactstrap';
+import PokeDexNav from './PokeDexNav';
 
 function PokeDexIndex() {
   return (
     <React.Fragment>
       <Header />
       <NavigationBar />
-      <Container style={{backgroundColor:'cyan'}}>
-        <PokemonCard />
-      </Container>
+        <Container style={{backgroundColor:'cyan'}}>
+          <PokeDexNav />
+          <CardContainer />
+        </Container>
       <Footer />
     </React.Fragment>
   )
