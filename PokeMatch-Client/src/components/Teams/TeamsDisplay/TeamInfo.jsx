@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { Button, ButtonGroup, Card, CardBody, CardFooter, CardText, CardTitle, Collapse, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { useNavigate } from 'react-router-dom';
 import { useTeamsContext } from '../../../contexts/TeamsContext'
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 //props passed back to TeamCard.jsx to build out card
 function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes, typesTeamIsWeakTo, typesTeamIsStrongAgainst, _id}) {
 
+  const navigate = useNavigate();
+
   //context for delete team and add random pokemon buttons
-  const {deleteOneTeam, addOneRandom, duplicateTeam, fetchTeams} = useTeamsContext();
+  const {deleteOneTeam, addOneRandom, duplicateTeam, fetchTeams, updateTeamId, idForTeam} = useTeamsContext();
   const {userId, sessionToken} = useAuthContext();
 
   //use states and toggles for collapses
@@ -36,8 +39,6 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
   const [teamGen, setTeamGen] = useState('');
   const [teamAmountOfMembers, setTeamAmountOfMembers] = useState('');
 
-  //!need to pass down teamId to getOneById and set form values to be edited
-
   //*Get One Team Func
   const getOne = async (teamId) =>{
     console.log('team Id: ',teamId);
@@ -53,10 +54,12 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
       //testing
       // console.log('getOne: ',data);
       // console.log(data.teamName);
+      console.log('data.id',data._id)
       setTeamName(data.teamName)
       setTeamGen(data.teamGeneration)
       setTeamAmountOfMembers(data.amountOfMembers)
-      console.log('team name: ',team,'Gen: ', teamGen,'Members: ', teamAmountOfMembers);
+      updateTeamId(data._id)
+      console.log('team name: ',team,'Gen: ', teamGen,'Members: ', teamAmountOfMembers, 'ID: ', idForTeam );
 
     } catch (error) {
       console.error(error.message)
@@ -94,6 +97,11 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
     } catch (error) {
       console.error(error.message)
     }
+  }
+
+  const addPokemon = async(teamId)=>{
+    getOne(teamId);
+    navigate('/pokedex');
   }
 
   return (
@@ -171,6 +179,10 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
               <ListGroupItem>Number: {member.number}</ListGroupItem>
               <ListGroupItem>{member.primaryType}</ListGroupItem>
               <ListGroupItem>{member.secondaryType}</ListGroupItem>
+              <ButtonGroup>
+                <Button>Duplicate</Button>
+                <Button>Delete</Button>
+              </ButtonGroup>
             </ListGroup>
           ))
         }
@@ -221,7 +233,7 @@ function TeamInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes
         </Collapse>        
       <CardFooter>
           <ButtonGroup>
-            <Button>Add Pokemon</Button>
+            <Button onClick={()=>addPokemon(_id)}>Add Pokemon</Button>
           <Button onClick={()=> addOneRandom(_id)}>Add Random Pokemon</Button>
           </ButtonGroup>
           <ButtonGroup>

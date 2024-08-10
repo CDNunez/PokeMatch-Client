@@ -1,13 +1,21 @@
 //?Imports
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Row, Col } from 'reactstrap'
 import { usePokedexContext } from '../../../contexts/PokeDexContext'
 import CardInfo from './CardInfo';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 //*Component
 function PokemonCard() {
 
-  const {displayArray} = usePokedexContext();
+  const {displayArray, fetchAllPokemon} = usePokedexContext();
+  const {sessionToken}= useAuthContext();
+
+  useEffect(()=>{
+    if(sessionToken){
+      fetchAllPokemon();
+    }
+  },[sessionToken]);
 
   // genArray.forEach((pokemon)=> console.log(pokemon.pokemonName));
   // typeArray.forEach((pokemon)=> console.log(pokemon.pokemonName));
@@ -24,6 +32,7 @@ function PokemonCard() {
           primaryType={pokemon.primaryType}
           secondaryType={pokemon.secondaryType}
           entry={pokemon.entry} 
+          _id={pokemon._id}
           />
         </Col>
       ))

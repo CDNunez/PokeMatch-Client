@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useState } from 'react'
 import CardInfo from '../components/PokeDex/PokeCard/CardInfo';
+import { useAuthContext } from './AuthContext';
 
 const pokedexContext = createContext();
 
 export const PokeDexProvider = ({children}) => {
+
+  const {sessionToken, userId} = useAuthContext();
 
   //?filters
   //use state for filters : filter by gen, filter by type, etc...
@@ -49,6 +52,27 @@ export const PokeDexProvider = ({children}) => {
   // let [genArray, setGenArray] = useState([]);
   // let [typeArray, setTypeArray] = useState([]);
   let [displayArray, setDisplayArray] = useState([])
+
+  //*fetch all
+  async function fetchAllPokemon() {
+    const url = `http://localhost:4000/pokemon/`
+    const requestOptions={
+      method:"GET",
+      headers: new Headers({
+        'Authorization': sessionToken
+      })
+    }
+    try {
+      const res = await fetch(url,requestOptions);
+      const data= await res.json();
+      if(data){
+        setDisplayArray([]);
+        setDisplayArray(data);
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
 
   // //*fetch by gen
   async function fetchPokemonByGen(gen){
@@ -115,7 +139,7 @@ export const PokeDexProvider = ({children}) => {
     }
   }
   return (
-    <pokedexContext.Provider value={{handleGen, handlePrimary, handleEffective, fetchPokemonByGen, displayArray, pokemonGen, pokemonPrimaryType}}>{children}</pokedexContext.Provider>
+    <pokedexContext.Provider value={{handleGen, handlePrimary, handleEffective, fetchPokemonByGen, fetchAllPokemon, displayArray, pokemonGen, pokemonPrimaryType}}>{children}</pokedexContext.Provider>
   )
 }
 

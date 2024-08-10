@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useAuthContext} from './AuthContext'
 
 const teamsContext = createContext();
 
 export const TeamsProvider= ({children}) => {
-
+  
+  const navigate = useNavigate();
+  
   const {userId, sessionToken} = useAuthContext();
 
   const [teams, setTeams] = useState([]);
@@ -110,9 +113,14 @@ export const TeamsProvider= ({children}) => {
     }
   }
 
+  //*Add Pokemon To Team
+  const [idForTeam, setIdForTeam] = useState('')
+  function updateTeamId(id){
+    setIdForTeam(id)
+  }
 
   return (
-    <teamsContext.Provider value={{fetchTeams, deleteAllTeams, deleteOneTeam, addOneRandom, duplicateTeam, teams}}>{children}</teamsContext.Provider>
+    <teamsContext.Provider value={{fetchTeams, deleteAllTeams, deleteOneTeam, addOneRandom, duplicateTeam, updateTeamId, teams, idForTeam}}>{children}</teamsContext.Provider>
   )
 }
 

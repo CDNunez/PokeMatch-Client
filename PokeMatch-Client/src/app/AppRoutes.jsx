@@ -12,10 +12,15 @@ import ComparatorIndex from '../components/TeamComparator/ComparatorIndex';
 import { AuthProvider } from '../contexts/AuthContext';
 //*Route Authentication
 import ProtectedRoutes from './ProtectedRoutes';
+import { PokeDexProvider } from '../contexts/PokeDexContext';
+import { TeamsProvider } from '../contexts/TeamsContext';
 
 function AppRoutes() {
   return (
       <AuthProvider>
+        <PokeDexProvider>
+          <TeamsProvider>
+
         <Routes>
             <Route path='/' element={<Auth />}/>
             <Route element={<ProtectedRoutes />}>
@@ -25,6 +30,8 @@ function AppRoutes() {
               <Route element={<ComparatorIndex />} path='/compare' exact />
             </Route>
         </Routes>
+          </TeamsProvider>
+        </PokeDexProvider>
         </AuthProvider>
 )
 }
