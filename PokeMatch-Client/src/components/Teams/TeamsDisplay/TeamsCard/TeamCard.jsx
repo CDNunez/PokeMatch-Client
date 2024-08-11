@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { useTeamsContext } from '../../../contexts/TeamsContext'
-import { useAuthContext } from '../../../contexts/AuthContext';
+import { useTeamsContext } from '../../../../contexts/TeamsContext'
+import { useAuthContext } from '../../../../contexts/AuthContext';
 import { Col, Row } from 'reactstrap';
-import TeamInfo from './TeamInfo';
+import TeamCardInfo from './TeamCardInfo';
 
 function TeamCard() {
   const {teams, fetchTeams} = useTeamsContext();
@@ -22,7 +22,7 @@ function TeamCard() {
       {
         teams.map((team, index)=>(
           <Col md='4' key={index}>
-            <TeamInfo
+            <TeamCardInfo
             teamName={team.teamName}
             amountOfMembers={team.amountOfMembers}
             teamGeneration={team.teamGeneration}

@@ -1,23 +1,20 @@
-//?Imports
-//*Dependencies
 import React from 'react'
-import { Container } from 'reactstrap'
-//*Components
-import NavigationBar from '../NavigationBar/NavigationBar'
 import Header from '../Header/Header'
+import NavigationBar from '../NavigationBar/NavigationBar'
 import Footer from '../Footer/Footer'
-import TeamNavBar from './TeamNavBar'
-import TeamContainer from './TeamsDisplay/TeamContainer'
+import TeamsNav from './TeamsNav/TeamsNav'
+import { Container } from 'reactstrap'
+import TeamsContainer from './TeamsDisplay/TeamsContainer'
 
 function TeamsIndex() {
   return (
     <>
     <Header />
     <NavigationBar />
-      <TeamNavBar />
-      <Container>
-        <TeamContainer />
-      </Container>
+    <TeamsNav />
+    <Container>
+      <TeamsContainer />
+    </Container>
     <Footer />
     </>
   )
