@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import CardContainer from './PokeCard/CardContainer';
 import { Container } from 'reactstrap';
-import PokeDexNav from './PokeDexNav';
+import PokeDexNav from './PokeDexNav/PokeDexNav';
 
 function PokeDexIndex() {
   return (
