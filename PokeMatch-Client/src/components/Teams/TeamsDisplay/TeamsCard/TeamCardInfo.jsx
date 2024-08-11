@@ -4,6 +4,9 @@ import AddRandom from './TeamCardButtons/AddRandom';
 import TeamDuplicate from './TeamCardButtons/TeamDuplicate';
 import TeamDelete from './TeamCardButtons/TeamDelete';
 import TeamEdit from './TeamCardButtons/TeamEdit';
+import DuplicateMember from './MemberButtons/DuplicateMember';
+import DeleteMember from './MemberButtons/DeleteMember';
+import AddMember from './TeamCardButtons/AddMember';
 
 //                    props to be passed down to other elements
 function TeamCardInfo({teamName, amountOfMembers, teamGeneration, members, teamTypes, typesTeamIsWeakTo, typesTeamIsStrongAgainst, _id}) {
@@ -41,8 +44,14 @@ function TeamCardInfo({teamName, amountOfMembers, teamGeneration, members, teamT
               <ListGroupItem>{member.primaryType}</ListGroupItem>
               <ListGroupItem>{member.secondaryType}</ListGroupItem>
               <ButtonGroup>
-                <Button>Duplicate</Button>
-                <Button>Delete</Button>
+                <DuplicateMember 
+                teamId={_id}
+                memberId={member._id}
+                />
+                <DeleteMember 
+                teamId={_id}
+                memberId={member._id}
+                />
               </ButtonGroup>
             </ListGroup>
           ))
@@ -94,7 +103,7 @@ function TeamCardInfo({teamName, amountOfMembers, teamGeneration, members, teamT
         </Collapse>        
       <CardFooter>
           <ButtonGroup>
-            <Button>Add Pokemon</Button>
+            <AddMember />
             <AddRandom
             // passing down team id as props for AddRandom element 
             id={_id}
