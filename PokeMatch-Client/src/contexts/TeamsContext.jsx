@@ -1,14 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import {useNavigate} from 'react-router-dom'
 import {useAuthContext} from './AuthContext'
 import {baseURL} from '../env/index'
 
 const teamsContext = createContext();
 
 export const TeamsProvider= ({children}) => {
-  
-  const navigate = useNavigate();
-  
+    
   const {userId, sessionToken} = useAuthContext();
 
   const [teams, setTeams] = useState([]);

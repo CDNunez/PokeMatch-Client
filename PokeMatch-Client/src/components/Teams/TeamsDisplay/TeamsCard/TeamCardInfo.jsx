@@ -103,7 +103,9 @@ function TeamCardInfo({teamName, amountOfMembers, teamGeneration, members, teamT
         </Collapse>        
       <CardFooter>
           <ButtonGroup>
-            <AddMember />
+            {/* <AddMember 
+            teamId={_id}
+            /> */}
             <AddRandom
             // passing down team id as props for AddRandom element 
             id={_id}
